@@ -12,8 +12,12 @@ function index(req, res) {
 }
 
 function show(req, res) {
+
     const { id } = req.params;
     const sql = "SELECT * FROM products WHERE id = ?";
+    const detailsSql = ' SELECT product_id, ram, processor, storage, graphic_card, os, psu,`case`, motherboard, inches, color, dpi, audio_type, impedance, connectivity, keyboard_layout, keyboard_type, frequency FROM details JOIN products ON details.product_id = products.id'
+
+
     connection.query(sql, [id], (err, results) => {
         if (err) {
             return res.status(500).json({ error: err.message });
