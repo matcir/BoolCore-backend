@@ -5,6 +5,8 @@ const connection = require('./db/connection')
 const cors = require('cors')
 
 
+const router = require('./router/router')
+
 app.use(express.json())
 
 
@@ -13,4 +15,9 @@ app.listen(PORT, () => {
 })
 
 app.use(cors())
+
+
+
+app.use('/api/products', router)
+
 
