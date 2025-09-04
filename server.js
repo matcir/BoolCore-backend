@@ -3,7 +3,7 @@ const app = express()
 const PORT = 3000
 const connection = require('./db/connection')
 const cors = require('cors')
-
+const router = require('./router/router')
 app.use(express.json())
 
 
@@ -13,16 +13,5 @@ app.listen(PORT, () => {
 
 app.use(cors())
 
-//INDEX
-app.get('/api/products', (req, res) => {
-    //SAVING THE QUERY STRING INTO A VARIABLE
-    const sql = 'SELECT * FROM boolcore_db.products'
-    connection.query(sql, (err, result) => {
+app.use('/api/products', router)
 
-        //Manage 500 error
-        if (err) return res.status(500).json({ error: 'true', message: err.message })
-
-        res.json(result)
-    })
-
-})
