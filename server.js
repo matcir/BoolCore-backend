@@ -3,9 +3,7 @@ const app = express()
 const PORT = 3000
 const connection = require('./db/connection')
 const cors = require('cors')
-
-
-const router = require('./router/router')
+const productsRouter = require('./router/productsRouter')
 
 app.use(express.json())
 
@@ -18,6 +16,6 @@ app.use(cors())
 
 
 
-app.use('/api/products', router)
+app.use('/api/products', productsRouter)
 
 
