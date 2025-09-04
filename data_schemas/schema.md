@@ -6,7 +6,7 @@
 - name || VARCHAR(255) NOTNULL
 - description ||
 - price || DECIMAL
-- create-date || DATE
+-date || DATE
 - discount || INT
 
 # in-voice
