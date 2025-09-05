@@ -2,7 +2,7 @@ const express = require("express");
 const connection = require("../db/connection");
 
 function index(req, res) {
-  const sql = "SELECT * FROM in invoices";
+  const sql = "SELECT * FROM invoices";
   connection.query(sql, (err, results) => {
     if (err) {
       return res.status(500).json({ error: err.message });
@@ -13,7 +13,7 @@ function index(req, res) {
 
 function show(req, res) {
   const { id } = req.params;
-  const sql = "SELECT * FROM invoices WHERE id = ?";
+  const sql = "SELECT * FROM boolcore_db.invoices WHERE id = ?";
   connection.query(sql, [id], (err, results) => {
     if (err) {
       return res.status(500).json({ error: err.message });
@@ -21,7 +21,7 @@ function show(req, res) {
     if (results.length === 0) {
       return res.status(404).json({ error: "Invoice not found" });
     }
-    res.json(result[0]);
+    res.json(results);
   });
 }
 
@@ -30,7 +30,6 @@ function store(req, res) {
     name,
     last_name,
     email,
-    date,
     address,
     city,
     cap,
@@ -38,10 +37,10 @@ function store(req, res) {
     total,
     payment,
     shipping_price,
+    products,
   } = req.body;
 
-  const sql =
-    "INSERT INTO invoices (name, last_name, email, date, address, city, cap, country, total, payment, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); SET @last_invoice_id = LAST_INSERT_ID(); INSERT INTO products_orders (productId, invoice_id, quantity, discount_price, product_price, product_name) VALUES(?, @last_invoice_id, ?, ?, ?, ?);";
+  const sql = "INSERT INTO invoices (name, last_name, email, address, city, cap, country, total, payment_method, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   connection.query(
     sql,
@@ -49,7 +48,6 @@ function store(req, res) {
       name,
       last_name,
       email,
-      date,
       address,
       city,
       cap,
@@ -59,15 +57,30 @@ function store(req, res) {
       shipping_price,
     ],
     (err, results) => {
-      if (err)
-        return res.status(500).json({
-          error: true,
-          message: err.message,
-        });
+      if (err) {
+        return res.status(500).json({ error: true, message: err.message });
+      }
 
-      res.status(201).json({
-        id: results.insertId,
+      const lastInvoiceId = results.insertId;
+
+      products.forEach((product) => {
+
+        const productsSql = `INSERT INTO products_orders
+          (productId, invoice_id, quantity, discount_price, product_price, product_name) 
+         VALUES(?, ?, ?, ?, ?, ?)`
+        connection.query(productsSql,
+          [
+            product.id,
+            lastInvoiceId,
+            product.quantity,
+            product.discount_price,
+            product.product_price,
+            product.product_name,
+          ]
+        );
       });
+
+      res.status(201).json({ message: 'Ordine inserito con successo' });
     }
   );
 }
