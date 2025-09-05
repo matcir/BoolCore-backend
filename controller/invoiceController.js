@@ -2,7 +2,7 @@ const express = require("express");
 const connection = require("../db/connection");
 
 function index(req, res) {
-  const sql = "SELECT * FROM in invoices";
+  const sql = "SELECT * FROM invoices";
   connection.query(sql, (err, results) => {
     if (err) {
       return res.status(500).json({ error: err.message });
