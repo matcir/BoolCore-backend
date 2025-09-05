@@ -30,7 +30,6 @@ function store(req, res) {
     name,
     last_name,
     email,
-    date,
     address,
     city,
     cap,
@@ -38,10 +37,10 @@ function store(req, res) {
     total,
     payment,
     shipping_price,
+    products,
   } = req.body;
 
-  const sql =
-    "INSERT INTO invoices (name, last_name, email, date, address, city, cap, country, total, payment, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); SET @last_invoice_id = LAST_INSERT_ID(); INSERT INTO products_orders (productId, invoice_id, quantity, discount_price, product_price, product_name) VALUES(?, @last_invoice_id, ?, ?, ?, ?);";
+  const sql = "INSERT INTO invoices (name, last_name, email, address, city, cap, country, total, payment_method, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   connection.query(
     sql,
@@ -49,7 +48,6 @@ function store(req, res) {
       name,
       last_name,
       email,
-      date,
       address,
       city,
       cap,
@@ -59,15 +57,30 @@ function store(req, res) {
       shipping_price,
     ],
     (err, results) => {
-      if (err)
-        return res.status(500).json({
-          error: true,
-          message: err.message,
-        });
+      if (err) {
+        return res.status(500).json({ error: true, message: err.message });
+      }
 
-      res.status(201).json({
-        id: results.insertId,
+      const lastInvoiceId = results.insertId;
+
+      products.forEach((product) => {
+
+        const productsSql = `INSERT INTO products_orders
+          (productId, invoice_id, quantity, discount_price, product_price, product_name) 
+         VALUES(?, ?, ?, ?, ?, ?)`
+        connection.query(productsSql,
+          [
+            product.id,
+            lastInvoiceId,
+            product.quantity,
+            product.discount_price,
+            product.product_price,
+            product.product_name,
+          ]
+        );
       });
+
+      res.status(201).json({ message: 'Ordine inserito con successo' });
     }
   );
 }
