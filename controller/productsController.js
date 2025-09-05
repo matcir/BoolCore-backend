@@ -4,12 +4,38 @@ const connection = require("../db/connection");
 
 //INDEX 
 function index(req, res) {
-  const sql = "SELECT * FROM products";
+  const sql = `SELECT products.id, categories.name as category_name, products.name as product_name, description, price, discount, create_date, SUM(products_orders.quantity) AS total_sold FROM products JOIN categories ON products.category_id = categories.id JOIN products_orders ON products.id = products_orders.productId GROUP BY products.id`;
+
   connection.query(sql, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(results);
+    if (err) return res.status(500).json({ error: err.message });
+
+    const imageSql = 'SELECT image FROM images WHERE id_product = ?';
+
+    // Creo un array di Promises per tutte le query immagini
+    const productPromises = results.map(product =>
+      new Promise((resolve, reject) => {
+        connection.query(imageSql, [product.id], (err, imageResults) => {
+          if (err) return reject(err);
+
+          const images = imageResults.map(img => img.image);
+
+          resolve({
+            category_name: product.category_name,
+            product_name: product.product_name,
+            description: product.description,
+            price: product.price,
+            discount: product.discount,
+            total_sold: product.total_sold,
+            create_date: product.create_date,
+            images
+          });
+        });
+      })
+    );
+
+    Promise.all(productPromises)
+      .then(products => res.json(products))
+      .catch(error => res.status(500).json({ error: error.message }));
   });
 }
 
@@ -89,5 +115,6 @@ function show(req, res) {
   })
 
 }
+
 
 module.exports = { index, show }
