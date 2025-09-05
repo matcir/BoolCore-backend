@@ -15,7 +15,6 @@ app.listen(PORT, () => {
 app.use(cors())
 
 
-
 app.use('/api/products', productsRouter)
 
 
