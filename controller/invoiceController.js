@@ -13,7 +13,7 @@ function index(req, res) {
 
 function show(req, res) {
   const { id } = req.params;
-  const sql = "SELECT * FROM invoices WHERE id = ?";
+  const sql = "SELECT * FROM boolcore_db.invoices WHERE id = ?";
   connection.query(sql, [id], (err, results) => {
     if (err) {
       return res.status(500).json({ error: err.message });
@@ -21,7 +21,7 @@ function show(req, res) {
     if (results.length === 0) {
       return res.status(404).json({ error: "Invoice not found" });
     }
-    res.json(result[0]);
+    res.json(results);
   });
 }
 
