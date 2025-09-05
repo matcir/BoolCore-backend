@@ -138,7 +138,8 @@ INSERT INTO details (product_id, ram, processor, storage, graphic_card, os, psu,
 (61, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Rosa', NULL, 'Kids', '16 Ohm', 'Jack 3.5mm', NULL, NULL, '30Hz-16kHz'),
 (62, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Verde', NULL, 'Kids', '16 Ohm', 'Bluetooth', NULL, NULL, '30Hz-16kHz');
 
-- PRODUCTS
+- PRODUCTS (DESKTOP)
+
   INSERT INTO products (id, categories_id, name, description, price, discount, create_date) VALUES
   (23, 2, 'PC Fisso Sigma Plus', 'PC desktop professionale avanzato', 999.99, 0.05, '2025-09-10'),
   (24, 2, 'PC Fisso Omega Pro', 'PC desktop gaming estremo', 1599.99, 0.12, '2025-09-11'),
@@ -180,6 +181,49 @@ INSERT INTO details (product_id, ram, processor, storage, graphic_card, os, psu,
   (60, 2, 'PC Fisso Beta Pro', 'PC desktop economico compatto', 699.99, 0.05, '2025-10-17'),
   (61, 2, 'PC Fisso Gamma S', 'PC desktop silenzioso ultra', 999.99, 0.08, '2025-10-18'),
   (62, 2, 'PC Fisso Delta Pro', 'PC desktop mini SSD', 799.99, 0.06, '2025-10-19');
+
+  - DETTAGLI desktop
+
+  (23, '16GB', 'Intel i7', '1TB SSD', 'RTX 3070', 'Windows 11 Pro', '650W', 'ATX', 'ASUS Z590', 'Nero'),
+  (24, '32GB', 'Intel i9', '2TB SSD', 'RTX 3080', 'Windows 11 Pro', '750W', 'ATX', 'MSI Z690', 'Grigio'),
+  (25, '8GB', 'Intel i5', '512GB SSD', 'Intel UHD', 'Windows 11', '500W', 'Micro ATX', 'Gigabyte B560', 'Nero'),
+  (26, '16GB', 'AMD Ryzen 5', '1TB SSD', 'AMD Radeon RX 6600', 'Windows 11', '550W', 'Mini Tower', 'ASRock B550', 'Bianco'),
+  (27, '64GB', 'Intel Xeon', '4TB SSD', 'NVIDIA Quadro RTX', 'Windows 11 Pro', '1000W', 'Full Tower', 'Supermicro X11', 'Nero'),
+  (28, '8GB', 'Intel i3', '256GB SSD', 'Intel UHD', 'Windows 10', '400W', 'ATX', 'MSI H510', 'Argento'),
+  (29, '16GB', 'Intel i7', '1TB SSD', 'Intel Iris Xe', 'Windows 11', '600W', 'ATX', 'ASUS B460', 'Nero'),
+  (30, '8GB', 'AMD Ryzen 3', '512GB SSD', 'AMD Radeon Vega', 'Windows 11', '450W', 'Mini', 'Gigabyte A320', 'Blu'),
+  (31, '16GB', 'Intel i5', '512GB SSD', 'Intel UHD', 'Windows 11', '500W', 'Micro ATX', 'ASRock H410', 'Grigio'),
+  (32, '4GB', 'Intel Celeron', '128GB SSD', 'Intel UHD', 'Windows 10', '300W', 'Mini', 'Gigabyte H410', 'Bianco'),
+  (33, '16GB', 'Intel i7', '1TB SSD', 'Intel Iris Xe', 'Windows 11', '650W', 'All-in-One', 'ASUS B560', 'Nero'),
+  (34, '8GB', 'Intel i5', '512GB SSD', 'Intel UHD', 'Windows 11', '500W', 'ATX', 'MSI B460', 'Rosso'),
+  (35, '32GB', 'Intel i9', '2TB SSD', 'RTX 3060', 'Windows 11 Pro', '750W', 'ATX', 'ASUS Z590', 'Nero'),
+  (36, '64GB', 'AMD Threadripper', '4TB SSD', 'RTX 3090', 'Windows 11 Pro', '1200W', 'Full Tower', 'MSI X399', 'Bianco'),
+  (37, '8GB', 'Intel i3', '256GB SSD', 'Intel UHD', 'Windows 10', '400W', 'Mini', 'Gigabyte H410', 'Nero'),
+  (38, '16GB', 'Intel i7', '1TB SSD', 'Intel Iris Xe', 'Windows 11', '600W', 'ATX', 'ASUS B460', 'Blu'),
+  (39, '32GB', 'Intel i9', '2TB SSD', 'RTX 3070', 'Windows 11 Pro', '850W', 'ATX', 'MSI Z690', 'Grigio'),
+  (40, '8GB', 'Intel i5', '512GB SSD', 'Intel UHD', 'Windows 11', '500W', 'Micro ATX', 'Gigabyte B560', 'Nero'),
+  (41, '16GB', 'AMD Ryzen 5', '1TB SSD', 'AMD Radeon RX 6600', 'Windows 11', '550W', 'ATX', 'ASRock B550', 'Rosa'),
+  (42, '4GB', 'Intel Celeron', '128GB SSD', 'Intel UHD', 'Windows 10', '300W', 'Mini', 'Gigabyte H410', 'Verde');
+  (43, '32GB', 'Intel i9', '2TB SSD', 'RTX 4080', 'Windows 11 Pro', '850W', 'ATX', 'ASUS ROG', 'Nero'),
+  (44, '64GB', 'AMD Ryzen 9', '4TB SSD', 'Radeon RX 7900', 'Windows 11 Pro', '1000W', 'Full Tower', 'MSI X570', 'Grigio'),
+  (45, '16GB', 'Intel i7', '1TB SSD', 'Intel UHD', 'Windows 11', '500W', 'Mini Tower', 'Gigabyte B560', 'Bianco'),
+  (46, '32GB', 'Intel Xeon', '2TB SSD', 'Quadro RTX', 'Windows Server', '1200W', 'Rack', 'Supermicro X11', 'Nero'),
+  (47, '16GB', 'AMD Ryzen 7', '1TB SSD', 'Radeon RX 6700', 'Windows 11', '650W', 'ATX', 'ASRock B450', 'Blu'),
+  (48, '8GB', 'Intel i3', '512GB SSD', 'Intel UHD', 'Windows 10', '400W', 'ATX', 'MSI H510', 'Argento'),
+  (49, '32GB', 'Intel i7', '2TB SSD', 'Intel Iris Xe', 'Windows 11', '600W', 'ATX', 'ASUS B460', 'Nero'),
+  (50, '16GB', 'AMD Ryzen 5', '1TB SSD', 'Radeon Vega', 'Windows 11', '450W', 'Mini', 'Gigabyte A320', 'Blu'),
+  (51, '16GB', 'Intel i5', '512GB SSD', 'Intel UHD', 'Windows 11', '500W', 'Micro ATX', 'ASRock H410', 'Grigio'),
+  (52, '8GB', 'Intel Celeron', '256GB SSD', 'Intel UHD', 'Windows 10', '300W', 'Mini', 'Gigabyte H410', 'Bianco'),
+  (53, '32GB', 'Intel i7', '1TB SSD', 'Intel Iris Xe', 'Windows 11', '650W', 'All-in-One', 'ASUS B560', 'Nero'),
+  (54, '16GB', 'Intel i5', '512GB SSD', 'Intel UHD', 'Windows 11', '500W', 'ATX', 'MSI B460', 'Rosso'),
+  (55, '64GB', 'Intel i9', '4TB SSD', 'RTX 4090', 'Windows 11 Pro', '1000W', 'ATX', 'ASUS Z790', 'Nero'),
+  (56, '32GB', 'AMD Threadripper', '2TB SSD', 'RTX 3080', 'Windows 11 Pro', '1200W', 'Full Tower', 'MSI X399', 'Bianco'),
+  (57, '16GB', 'Intel i3', '512GB SSD', 'Intel UHD', 'Windows 10', '400W', 'Mini', 'Gigabyte H410', 'Nero'),
+  (58, '32GB', 'Intel i7', '2TB SSD', 'Intel Iris Xe', 'Windows 11', '600W', 'ATX', 'ASUS B460', 'Blu'),
+  (59, '64GB', 'Intel i9', '4TB SSD', 'RTX 4080', 'Windows 11 Pro', '850W', 'ATX', 'MSI Z690', 'Grigio'),
+  (60, '16GB', 'Intel i5', '512GB SSD', 'Intel UHD', 'Windows 11', '500W', 'Micro ATX', 'Gigabyte B560', 'Nero'),
+  (61, '32GB', 'AMD Ryzen 7', '2TB SSD', 'Radeon RX 6800', 'Windows 11', '650W', 'ATX', 'ASRock B550', 'Rosa'),
+  (62, '8GB', 'Intel Celeron', '256GB SSD', 'Intel UHD', 'Windows 10', '300W', 'Mini', 'Gigabyte H410', 'Verde');
 
 - NOTEBOOK
 
@@ -223,6 +267,48 @@ INSERT INTO details (product_id, ram, processor, storage, graphic_card, os, psu,
 (60, 3, 'Notebook Beta Ultra', 'Notebook silenzioso ultra', 999.99, 0.08, '2025-11-07'),
 (61, 3, 'Notebook Gamma Pro', 'Notebook mini SSD', 799.99, 0.06, '2025-11-08'),
 (62, 3, 'Notebook Delta Max', 'Notebook touch premium', 1099.99, 0.09, '2025-11-09');
+
+- DETAILS notebook
+  (23, '8GB', 'Intel i5', '256GB SSD', 'Intel UHD', 'Windows 11', NULL, NULL, NULL, '14', 'Argento', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (24, '16GB', 'Intel i7', '512GB SSD', 'Intel Iris Xe', 'Windows 11 Pro', NULL, NULL, NULL, '15.6', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (25, '32GB', 'Intel i9', '1TB SSD', 'RTX 3050', 'Windows 11', NULL, NULL, NULL, '17', 'Grigio', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (26, '8GB', 'AMD Ryzen 5', '512GB SSD', 'AMD Radeon', 'Windows 11', NULL, NULL, NULL, '13.3', 'Blu', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (27, '4GB', 'Intel Celeron', '128GB SSD', 'Intel UHD', 'Windows 10', NULL, NULL, NULL, '15.6', 'Bianco', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (28, '16GB', 'Intel i5', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (29, '8GB', 'Intel i7', '256GB SSD', 'Intel UHD', 'Windows 11', NULL, NULL, NULL, '13.3', 'Grigio', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (30, '8GB', 'AMD Ryzen 3', '512GB SSD', 'AMD Radeon Vega', 'Windows 11', NULL, NULL, NULL, '15.6', 'Blu', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (31, '16GB', 'Intel i5', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (32, '8GB', 'Intel i3', '256GB SSD', 'Intel UHD', 'Windows 10', NULL, NULL, NULL, '13.3', 'Argento', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (33, '16GB', 'Intel i7', '1TB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '15.6', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (34, '32GB', 'AMD Ryzen 7', '1TB SSD', 'RTX 3060', 'Windows 11', NULL, NULL, NULL, '17', 'Rosso', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (35, '16GB', 'Intel i7', '512GB SSD', 'Intel Iris Xe', 'Windows 11 Pro', NULL, NULL, NULL, '15.6', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (36, '8GB', 'Intel i5', '256GB SSD', 'Intel UHD', 'Windows 11', NULL, NULL, NULL, '13.3', 'Bianco', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (37, '16GB', 'Intel i7', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Grigio', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (38, '32GB', 'Intel i9', '1TB SSD', 'RTX 3070', 'Windows 11 Pro', NULL, NULL, NULL, '17', 'Blu', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (39, '8GB', 'Intel i3', '256GB SSD', 'Intel UHD', 'Windows 10', NULL, NULL, NULL, '13.3', 'Nero', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (40, '16GB', 'Intel i5', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Rosa', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (41, '8GB', 'AMD Ryzen 3', '512GB SSD', 'AMD Radeon Vega', 'Windows 11', NULL, NULL, NULL, '15.6', 'Verde', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (42, '16GB', 'Intel i7', '1TB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '15.6', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL);
+  (43, '16GB', 'Intel i7', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (44, '32GB', 'Intel i9', '1TB SSD', 'RTX 3060', 'Windows 11 Pro', NULL, NULL, NULL, '15.6', 'Grigio', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (45, '16GB', 'AMD Ryzen 7', '1TB SSD', 'RTX 3050', 'Windows 11', NULL, NULL, NULL, '17', 'Blu', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (46, '8GB', 'Intel i5', '512GB SSD', 'Intel UHD', 'Windows 11', NULL, NULL, NULL, '13.3', 'Argento', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (47, '4GB', 'Intel Celeron', '128GB SSD', 'Intel UHD', 'Windows 10', NULL, NULL, NULL, '15.6', 'Bianco', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (48, '16GB', 'Intel i7', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (49, '8GB', 'Intel i3', '256GB SSD', 'Intel UHD', 'Windows 10', NULL, NULL, NULL, '13.3', 'Grigio', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (50, '32GB', 'AMD Ryzen 9', '2TB SSD', 'RTX 3070', 'Windows 11 Pro', NULL, NULL, NULL, '17', 'Rosso', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (51, '16GB', 'Intel i5', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Blu', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (52, '8GB', 'Intel i3', '256GB SSD', 'Intel UHD', 'Windows 10', NULL, NULL, NULL, '13.3', 'Argento', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (53, '16GB', 'Intel i7', '1TB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '15.6', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (54, '32GB', 'AMD Ryzen 7', '1TB SSD', 'RTX 3060', 'Windows 11', NULL, NULL, NULL, '17', 'Rosso', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (55, '16GB', 'Intel i7', '512GB SSD', 'Intel Iris Xe', 'Windows 11 Pro', NULL, NULL, NULL, '15.6', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (56, '8GB', 'Intel i5', '256GB SSD', 'Intel UHD', 'Windows 11', NULL, NULL, NULL, '13.3', 'Bianco', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (57, '16GB', 'Intel i7', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Grigio', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (58, '32GB', 'Intel i9', '1TB SSD', 'RTX 3070', 'Windows 11 Pro', NULL, NULL, NULL, '17', 'Blu', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (59, '8GB', 'Intel i3', '256GB SSD', 'Intel UHD', 'Windows 10', NULL, NULL, NULL, '13.3', 'Nero', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (60, '16GB', 'Intel i5', '512GB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '14', 'Rosa', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL),
+  (61, '8GB', 'AMD Ryzen 3', '512GB SSD', 'AMD Radeon Vega', 'Windows 11', NULL, NULL, NULL, '15.6', 'Verde', NULL, NULL, NULL, 'Wi-Fi', NULL, NULL, NULL),
+  (62, '16GB', 'Intel i7', '1TB SSD', 'Intel Iris Xe', 'Windows 11', NULL, NULL, NULL, '15.6', 'Nero', NULL, NULL, NULL, 'Wi-Fi, Bluetooth', NULL, NULL, NULL);
 
 - PRODUCT
 
@@ -268,6 +354,49 @@ INSERT INTO products (id, categories_id, name, description, price, discount, cre
 (61, 4, 'Mouse Classic Pro', 'Mouse classico wireless', 29.99, 0.00, '2025-11-08'),
 (62, 4, 'Mouse Ultra Max', 'Mouse ultra leggero professionale', 49.99, 0.07, '2025-11-09');
 
+-DETAILS mouse
+
+(23, 1600, 'Nero', 'USB', NULL),
+(24, 12000, 'Nero', 'USB', NULL),
+(25, 2400, 'Grigio', 'Wireless', NULL),
+(26, 3200, 'Nero', 'USB', NULL),
+(27, 1600, 'Blu', 'Bluetooth', NULL),
+(28, 16000, 'Nero', 'USB', NULL),
+(29, 1200, 'Bianco', 'USB', NULL),
+(30, 1600, 'Nero', 'USB', NULL),
+(31, 2400, 'Nero', 'USB', NULL),
+(32, 1600, 'Grigio', 'Wireless', NULL),
+(33, 16000, 'Nero', 'USB', NULL),
+(34, 1200, 'Nero', 'USB', NULL),
+(35, 2400, 'Blu', 'Wireless', NULL),
+(36, 800, 'Rosso', 'USB', NULL),
+(37, 3200, 'Nero', 'USB', NULL),
+(38, 2400, 'Grigio', 'Wireless', NULL),
+(39, 16000, 'Nero', 'USB', NULL),
+(40, 1200, 'Blu', 'Wireless', NULL),
+(41, 1600, 'Nero', 'USB', NULL),
+(42, 16000, 'Grigio', 'Wireless', NULL);
+(43, 3200, 'Nero', 'USB', NULL),
+(44, 16000, 'Nero', 'USB', NULL),
+(45, 2400, 'Grigio', 'Wireless', NULL),
+(46, 3200, 'Nero', 'USB', NULL),
+(47, 1600, 'Blu', 'Bluetooth', NULL),
+(48, 18000, 'Nero', 'USB', NULL),
+(49, 1200, 'Bianco', 'Wireless', NULL),
+(50, 2400, 'Nero', 'USB-C', NULL),
+(51, 3200, 'Grigio', 'USB', NULL),
+(52, 1600, 'Nero', 'Wireless', NULL),
+(53, 24000, 'Nero', 'USB', NULL),
+(54, 1200, 'Grigio', 'Wireless', NULL),
+(55, 2400, 'Blu', 'Wireless', NULL),
+(56, 800, 'Rosso', 'USB', NULL),
+(57, 16000, 'Nero', 'USB', NULL),
+(58, 2400, 'Grigio', 'USB-C', NULL),
+(59, 32000, 'Nero', 'USB', NULL),
+(60, 1200, 'Blu', 'Wireless', NULL),
+(61, 1600, 'Nero', 'Wireless', NULL),
+(62, 24000, 'Grigio', 'Wireless', NULL);
+
 - TASTIERE
 
 INSERT INTO products (id, categories_id, name, description, price, discount, create_date) VALUES
@@ -312,6 +441,49 @@ INSERT INTO products (id, categories_id, name, description, price, discount, cre
 (61, 4, 'Tastiera Macro Pro', 'Tastiera con macro programmabili', 99.99, 0.12, '2025-11-08'),
 (62, 4, 'Tastiera Ultra Max', 'Tastiera ultra leggera professionale', 59.99, 0.08, '2025-11-09');
 
+- DETAILS tastiera
+
+  (23, 'Nero', NULL, 'USB', 'ITA', 'Meccanica'),
+  (24, 'Grigio', NULL, 'USB', 'ITA', 'Membrana'),
+  (25, 'Nero', NULL, 'USB', 'ITA', 'Meccanica'),
+  (26, 'Bianco', NULL, 'Wireless', 'ITA', 'Membrana'),
+  (27, 'Blu', NULL, 'Bluetooth', 'ITA', 'Membrana'),
+  (28, 'Nero', NULL, 'USB', 'ITA', 'Slim'),
+  (29, 'Nero', NULL, 'USB', 'ITA', 'Ergonomica'),
+  (30, 'Nero', NULL, 'USB', 'ITA', 'Membrana'),
+  (31, 'Nero', NULL, 'Wireless', 'ITA', 'Compatta'),
+  (32, 'Grigio', NULL, 'USB', 'ITA', 'Retro'),
+  (33, 'Nero', NULL, 'USB', 'ITA', 'Multimediale'),
+  (34, 'Nero', NULL, 'USB', 'ITA', 'Gaming'),
+  (35, 'Nero', NULL, 'USB', 'ITA', 'Silenziosa'),
+  (36, 'Nero', NULL, 'USB', 'ITA', 'Waterproof'),
+  (37, 'Blu', NULL, 'USB', 'ITA', 'Kids'),
+  (38, 'Nero', NULL, 'USB', 'ITA', 'Illuminata'),
+  (39, 'Grigio', NULL, 'USB', 'ITA', 'Office'),
+  (40, 'Nero', NULL, 'Bluetooth', 'ITA', 'Compatta'),
+  (41, 'Nero', NULL, 'USB', 'ITA', 'Macro'),
+  (42, 'Nero', NULL, 'USB', 'ITA', 'Ultra');
+  (43, 'Nero', NULL, 'USB', 'ITA', 'Meccanica'),
+  (44, 'Grigio', NULL, 'USB', 'ITA', 'Membrana'),
+  (45, 'Nero', NULL, 'USB', 'ITA', 'Meccanica'),
+  (46, 'Bianco', NULL, 'Wireless', 'ITA', 'Compatta'),
+  (47, 'Blu', NULL, 'Bluetooth', 'ITA', 'Tablet'),
+  (48, 'Nero', NULL, 'USB', 'ITA', 'Slim'),
+  (49, 'Nero', NULL, 'USB', 'ITA', 'Ergonomica'),
+  (50, 'Nero', NULL, 'USB', 'ITA', 'Professionale'),
+  (51, 'Nero', NULL, 'Wireless', 'ITA', 'Compatta'),
+  (52, 'Grigio', NULL, 'USB', 'ITA', 'Retro'),
+  (53, 'Nero', NULL, 'USB', 'ITA', 'Multimediale'),
+  (54, 'Nero', NULL, 'USB', 'ITA', 'Gaming'),
+  (55, 'Nero', NULL, 'USB', 'ITA', 'Silenziosa'),
+  (56, 'Nero', NULL, 'USB', 'ITA', 'Waterproof'),
+  (57, 'Blu', NULL, 'USB', 'ITA', 'Kids'),
+  (58, 'Nero', NULL, 'USB', 'ITA', 'Illuminata'),
+  (59, 'Grigio', NULL, 'USB', 'ITA', 'Ultra Silenziosa'),
+  (60, 'Nero', NULL, 'Bluetooth', 'ITA', 'Slim'),
+  (61, 'Nero', NULL, 'USB', 'ITA', 'Macro'),
+  (62, 'Nero', NULL, 'USB', 'ITA', 'Ultra Leggera');
+
 - CUFFIE
 
 INSERT INTO products (id, categories_id, name, description, price, discount, create_date) VALUES
@@ -355,3 +527,46 @@ INSERT INTO products (id, categories_id, name, description, price, discount, cre
 (60, 4, 'Cuffie USB C Pro', 'Cuffie USB-C professionali', 69.99, 0.04, '2025-11-07'),
 (61, 4, 'Cuffie Bluetooth Max S', 'Cuffie bluetooth premium compatte', 139.99, 0.09, '2025-11-08'),
 (62, 4, 'Cuffie Noise Cancelling Ultra', 'Cuffie con riduzione rumore ultra', 179.99, 0.14, '2025-11-09');
+
+. DETAILS cuffie
+
+(23, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Studio', '32 Ohm', 'Jack 3.5mm', NULL, NULL, '20Hz-20kHz'),
+(24, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Blu', NULL, 'Sport', '16 Ohm', 'Bluetooth', NULL, NULL, '20Hz-18kHz'),
+(25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grigio', NULL, 'Travel', '24 Ohm', 'Jack 3.5mm', NULL, NULL, '20Hz-20kHz'),
+(26, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Bass', '32 Ohm', 'Jack 3.5mm', NULL, NULL, '15Hz-22kHz'),
+(27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Rosa', NULL, 'Kids', '16 Ohm', 'Jack 3.5mm', NULL, NULL, '30Hz-16kHz'),
+(28, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grigio', NULL, 'Wireless', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(29, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Gaming', '32 Ohm', 'USB', NULL, NULL, '20Hz-20kHz'),
+(30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Bianco', NULL, 'USB', '24 Ohm', 'USB', NULL, NULL, '20Hz-20kHz'),
+(31, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Blu', NULL, 'Bluetooth', '16 Ohm', 'Bluetooth', NULL, NULL, '20Hz-18kHz'),
+(32, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Noise Cancelling', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(33, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Blu', NULL, 'Sport', '16 Ohm', 'Bluetooth', NULL, NULL, '20Hz-18kHz'),
+(34, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grigio', NULL, 'Travel', '24 Ohm', 'Jack 3.5mm', NULL, NULL, '20Hz-20kHz'),
+(35, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Bass', '32 Ohm', 'Jack 3.5mm', NULL, NULL, '15Hz-22kHz'),
+(36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Rosa', NULL, 'Kids', '16 Ohm', 'Jack 3.5mm', NULL, NULL, '30Hz-16kHz'),
+(37, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Studio', '32 Ohm', 'Jack 3.5mm', NULL, NULL, '20Hz-20kHz'),
+(38, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grigio', NULL, 'Wireless', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(39, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Gaming', '32 Ohm', 'USB', NULL, NULL, '20Hz-20kHz'),
+(40, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Bianco', NULL, 'USB', '24 Ohm', 'USB-C', NULL, NULL, '20Hz-20kHz'),
+(41, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Blu', NULL, 'Bluetooth', '16 Ohm', 'Bluetooth', NULL, NULL, '20Hz-18kHz'),
+(42, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Noise Cancelling', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(43, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Studio', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(44, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Blu', NULL, 'Sport', '16 Ohm', 'Bluetooth', NULL, NULL, '20Hz-18kHz'),
+(45, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grigio', NULL, 'Travel', '24 Ohm', 'Jack 3.5mm', NULL, NULL, '20Hz-20kHz'),
+(46, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Bass', '32 Ohm', 'Jack 3.5mm', NULL, NULL, '15Hz-22kHz'),
+(47, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Rosa', NULL, 'Kids', '16 Ohm', 'Jack 3.5mm', NULL, NULL, '30Hz-16kHz'),
+(48, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grigio', NULL, 'Wireless', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(49, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Gaming', '32 Ohm', 'USB', NULL, NULL, '20Hz-20kHz'),
+(50, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Bianco', NULL, 'USB', '24 Ohm', 'USB', NULL, NULL, '20Hz-20kHz'),
+(51, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Blu', NULL, 'Bluetooth', '16 Ohm', 'Bluetooth', NULL, NULL, '20Hz-18kHz'),
+(52, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Noise Cancelling', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(53, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Blu', NULL, 'Sport', '16 Ohm', 'Bluetooth', NULL, NULL, '20Hz-18kHz'),
+(54, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grigio', NULL, 'Travel', '24 Ohm', 'Jack 3.5mm', NULL, NULL, '20Hz-20kHz'),
+(55, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Bass', '32 Ohm', 'Jack 3.5mm', NULL, NULL, '15Hz-22kHz'),
+(56, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Rosa', NULL, 'Kids', '16 Ohm', 'Jack 3.5mm', NULL, NULL, '30Hz-16kHz'),
+(57, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Studio', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(58, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grigio', NULL, 'Wireless', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz'),
+(59, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Gaming', '32 Ohm', 'USB', NULL, NULL, '20Hz-20kHz'),
+(60, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Bianco', NULL, 'USB', '24 Ohm', 'USB-C', NULL, NULL, '20Hz-20kHz'),
+(61, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Blu', NULL, 'Bluetooth', '16 Ohm', 'Bluetooth', NULL, NULL, '20Hz-18kHz'),
+(62, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nero', NULL, 'Noise Cancelling', '32 Ohm', 'Bluetooth', NULL, NULL, '20Hz-20kHz');
