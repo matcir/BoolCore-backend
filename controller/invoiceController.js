@@ -41,7 +41,7 @@ function store(req, res) {
   } = req.body;
 
   const sql =
-    "INSERT INTO invoices (name, last_name, email, date, address, city, cap, country, total, payment, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    "INSERT INTO invoices (name, last_name, email, date, address, city, cap, country, total, payment, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); SET @last_invoice_id = LAST_INSERT_ID(); INSERT INTO products_orders (productId, invoice_id, quantity, discount_price, product_price, product_name) VALUES(?, @last_invoice_id, ?, ?, ?, ?);";
 
   connection.query(
     sql,
