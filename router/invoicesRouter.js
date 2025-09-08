@@ -9,4 +9,8 @@ invoicesRouter.get("/", invoiceController.index);
 
 invoicesRouter.get("/:id", invoiceController.show);
 
+invoicesRouter.delete("/:id", invoiceController.destroy);
+
+invoicesRouter.patch("/:id", userDataValidation, invoiceController.update);
+
 module.exports = invoicesRouter;
