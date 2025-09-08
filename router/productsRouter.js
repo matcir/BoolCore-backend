@@ -6,7 +6,7 @@ const productsController = require("../controller/productsController");
 
 productsRouter.get("/", productsController.index);
 
-productsRouter.get("/:id", productsController.show);
+productsRouter.get("/:slug", productsController.show);
 
 productsRouter.post("/", userDataValidation(['name', 'description', 'price', 'discount']), productsController.store);
 
