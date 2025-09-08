@@ -40,7 +40,6 @@ function index(req, res) {
   });
 }
 
-
 //SHOW
 function show(req, res) {
 
@@ -99,8 +98,16 @@ function show(req, res) {
     const images = results.map((element) => {
       return element.image
     })
-
+    let filteredDetails = {};
     //CREO IL NUOVO OGGETTO CON LE CHIAVI DI MIO INTERESSE, INSERENDO I DETTAGLI E LE IMMAGGINI COME NUOVE CHIAVI
+
+    //RIMUOVO LE CHIAVI CON VALORE NULL O UNDEFINED
+    for (const key in details) {
+      if (details[key] !== null && details[key] !== undefined) {
+        filteredDetails[key] = details[key];
+      }
+    }
+
     product_details = {
       category: single_product.category_name,
       product_name: single_product.product_name,
@@ -108,7 +115,7 @@ function show(req, res) {
       price: single_product.price,
       discount: single_product.discount,
       create_date: single_product.create_date,
-      details: details,
+      details: filteredDetails,
       images: images
     }
 
@@ -117,5 +124,22 @@ function show(req, res) {
 
 }
 
+//STORE
+function store(req, res) {
+  const { name, category_id, description, price, discount } = req.body;
 
-module.exports = { index, show }
+  if (!name || !category_id || !description || !price || !discount) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  const sql = 'INSERT INTO products (name, category_id, description, price, discount) VALUES (?, ?, ?, ?, ?)';
+
+  connection.query(sql, [name, category_id, description, price, discount], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ message: "Prodotto aggiunto con successo" });
+  });
+}
+
+module.exports = { index, show, store };
