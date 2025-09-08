@@ -1,12 +1,14 @@
-function userDataValidation({
-  name,
-  last_name,
-  email,
-  address,
-  city,
-  cap,
-  country,
-}) {
+function userDataValidation(req, res, next) {
+  const {
+    name,
+    last_name,
+    email,
+    address,
+    city,
+    cap,
+    country,
+  } = req.body
+
   const errori = [];
 
   if (!name || typeof name !== "string" || name.trim() === "") {
@@ -38,7 +40,11 @@ function userDataValidation({
     errori.push("Il campo 'country' è obbligatorio.");
   }
 
-  return errori;
+  if (errori.length > 0) {
+    return res.status(400).json({ errors: errori });
+  }
+
+  next()
 }
 
 module.exports = userDataValidation;
