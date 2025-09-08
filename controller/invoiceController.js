@@ -64,6 +64,11 @@ function store(req, res) {
       const lastInvoiceId = results.insertId;
 
       products.forEach((product) => {
+        const productSql = 'SELECT * FROM products WHERE id = ?'
+        let info_product
+        connection.query(productSql, [product.id], (err, results) => {
+          info_product = result
+        })
 
         const productsSql = `INSERT INTO products_orders
           (productId, invoice_id, quantity, discount_price, product_price, product_name) 
