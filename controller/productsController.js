@@ -103,7 +103,7 @@ function show(req, res) {
     //CREO IL NUOVO OGGETTO CON LE CHIAVI DI MIO INTERESSE, INSERENDO I DETTAGLI E LE IMMAGGINI COME NUOVE CHIAVI
     product_details = {
       category: single_product.category_name,
-      name: single_product.product_name,
+      product_name: single_product.product_name,
       description: single_product.description,
       price: single_product.price,
       discount: single_product.discount,

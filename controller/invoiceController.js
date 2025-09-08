@@ -29,12 +29,16 @@ function store(req, res) {
   const {
     name, last_name, email, address, city, cap, country, payment, products,
   } = req.body;
-
+  
   // Inizia una transazione per garantire l'integrità dei dati
   connection.beginTransaction(err => {
     if (err) {
       return res.status(500).json({ error: true, message: 'Errore nell\'avvio della transazione' });
     }
+
+  const sql =
+    "INSERT INTO invoices (name, last_name, email, address, city, cap, country, total, payment_method, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
     // Inserisce la fattura iniziale
     const sql = "INSERT INTO invoices (name, last_name, email, address, city, cap, country, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -45,6 +49,7 @@ function store(req, res) {
 
       const lastInvoiceId = results.insertId;
       let invoice_total = 0;
+
 
       // Crea un array di Promise per ogni prodotto
       const productPromises = products.map(product =>
@@ -108,6 +113,24 @@ function store(req, res) {
         });
     });
   });
+      products.forEach((product) => {
+        const productsSql = `INSERT INTO products_orders
+          (productId, invoice_id, quantity, discount_price, product_price, product_name) 
+         VALUES(?, ?, ?, ?, ?, ?)`;
+        connection.query(productsSql, [
+          product.id,
+          lastInvoiceId,
+          product.quantity,
+          product.discount_price,
+          product.product_price,
+          product.product_name,
+        ]);
+      });
+
+      res.status(201).json({ message: "Ordine inserito con successo" });
+    }
+  );
+
 }
 
 module.exports = { index, show, store };
