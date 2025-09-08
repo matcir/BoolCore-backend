@@ -20,6 +20,7 @@ function index(req, res) {
           const images = imageResults.map(img => img.image);
 
           resolve({
+            id: product.id,
             category_name: product.category_name,
             product_name: product.product_name,
             description: product.description,
