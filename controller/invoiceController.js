@@ -40,7 +40,8 @@ function store(req, res) {
     products,
   } = req.body;
 
-  const sql = "INSERT INTO invoices (name, last_name, email, address, city, cap, country, total, payment_method, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  const sql =
+    "INSERT INTO invoices (name, last_name, email, address, city, cap, country, total, payment_method, shipping_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   connection.query(
     sql,
@@ -64,28 +65,20 @@ function store(req, res) {
       const lastInvoiceId = results.insertId;
 
       products.forEach((product) => {
-        const productSql = 'SELECT * FROM products WHERE id = ?'
-        let info_product
-        connection.query(productSql, [product.id], (err, results) => {
-          info_product = result
-        })
-
         const productsSql = `INSERT INTO products_orders
           (productId, invoice_id, quantity, discount_price, product_price, product_name) 
-         VALUES(?, ?, ?, ?, ?, ?)`
-        connection.query(productsSql,
-          [
-            product.id,
-            lastInvoiceId,
-            product.quantity,
-            product.discount_price,
-            product.product_price,
-            product.product_name,
-          ]
-        );
+         VALUES(?, ?, ?, ?, ?, ?)`;
+        connection.query(productsSql, [
+          product.id,
+          lastInvoiceId,
+          product.quantity,
+          product.discount_price,
+          product.product_price,
+          product.product_name,
+        ]);
       });
 
-      res.status(201).json({ message: 'Ordine inserito con successo' });
+      res.status(201).json({ message: "Ordine inserito con successo" });
     }
   );
 }
