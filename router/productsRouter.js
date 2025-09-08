@@ -1,12 +1,13 @@
 const express = require("express");
 const productsRouter = express.Router();
+const userDataValidation = require("../middlewares/userDataValidation");
 
 const productsController = require("../controller/productsController");
-
-// ATTENZIONE LE ROTTE SONO PROVVISORIE
 
 productsRouter.get("/", productsController.index);
 
 productsRouter.get("/:slug", productsController.show);
+
+productsRouter.post("/", userDataValidation(['name', 'description', 'price', 'discount']), productsController.store);
 
 module.exports = productsRouter;
