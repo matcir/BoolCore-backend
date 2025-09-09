@@ -85,30 +85,31 @@ function show(req, res) {
       connection.query(imageSql, [productId], (err, imageResults) => {
         if (err) return res.status(500).json({ error: err.message });
 
-    //MAPPO L'ARRAY DI OGGETTI DEL RISULTATO DELLE QUERY E CREO UN ARRAY CON SOLO IL PERCORSO DELLE IMMAGINI COME ELEMENTO
-    const images = results.map((element) => {
-      return element.image
-    })
-    let filteredDetails = {};
-    //CREO IL NUOVO OGGETTO CON LE CHIAVI DI MIO INTERESSE, INSERENDO I DETTAGLI E LE IMMAGGINI COME NUOVE CHIAVI
+        //MAPPO L'ARRAY DI OGGETTI DEL RISULTATO DELLE QUERY E CREO UN ARRAY CON SOLO IL PERCORSO DELLE IMMAGINI COME ELEMENTO
+        const img = results.map((element) => {
+          return element.image
+        })
+        let filteredDetails = {};
 
-    //RIMUOVO LE CHIAVI CON VALORE NULL O UNDEFINED
-    for (const key in details) {
-      if (details[key] !== null && details[key] !== undefined) {
-        filteredDetails[key] = details[key];
-      }
-    }
 
-    product_details = {
-      category: single_product.category_name,
-      product_name: single_product.product_name,
-      description: single_product.description,
-      price: single_product.price,
-      discount: single_product.discount,
-      create_date: single_product.create_date,
-      details: filteredDetails,
-      images: images
-    }
+        //RIMUOVO LE CHIAVI CON VALORE NULL O UNDEFINED
+        for (const key in details) {
+          if (details[key] !== null && details[key] !== undefined) {
+            filteredDetails[key] = details[key];
+          }
+        }
+
+        //CREO IL NUOVO OGGETTO CON LE CHIAVI DI MIO INTERESSE, INSERENDO I DETTAGLI E LE IMMAGGINI COME NUOVE CHIAVI
+        product_details = {
+          category: single_product.category_name,
+          product_name: single_product.product_name,
+          description: single_product.description,
+          price: single_product.price,
+          discount: single_product.discount,
+          create_date: single_product.create_date,
+          details: filteredDetails,
+          images: img
+        }
 
 
         const images = imageResults.map((img) => img.image);
@@ -132,8 +133,6 @@ function show(req, res) {
   });
 }
 
-module.exports = { index, show };
-
 //STORE
 function store(req, res) {
   const { name, category_id, description, price, discount } = req.body;
@@ -152,5 +151,49 @@ function store(req, res) {
   });
 }
 
-module.exports = { index, show, store };
+//DESTROY
+function destroy(req, res) {
+  const { id } = req.params;
+  const delSql = "DELETE FROM `boolcore_db`.`products` WHERE (`id` = ?);";
+
+  connection.query(delSql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    res.status(200).json({ message: "Prodotto eliminato con successo" });
+  });
+}
+
+//UPDATE
+function update(req, res) {
+  const { id } = req.params;
+  const {
+    category_id,
+    name,
+    description,
+    price,
+    discount,
+  } = req.body;
+
+  const sql = `
+    UPDATE products
+    SET category_id = ?, name = ?, description = ?, price = ?, discount = ?
+    WHERE id = ?
+  `;
+
+  connection.query(
+    sql,
+    [category_id, name, description, price, discount, id],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (result.affectedRows === 0) return res.status(404).json({ error: "Product not found" });
+      res.status(200).json({ message: "Prodotto aggiornato con successo" });
+    }
+  );
+}
+
+module.exports = { index, show, store, destroy, update };
 
