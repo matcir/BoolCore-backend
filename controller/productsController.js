@@ -195,5 +195,6 @@ function update(req, res) {
   );
 }
 
+
 module.exports = { index, show, store, destroy, update };
 

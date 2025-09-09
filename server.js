@@ -4,6 +4,10 @@ const PORT = 3000;
 const cors = require("cors");
 const productsRouter = require("./router/productsRouter");
 const invoicesRouter = require("./router/invoicesRouter");
+const detailsRouter = require("./router/detailsRouter");
+const categoriesRouter = require("./router/categoriesRouter")
+const imagesRouter = require("./router/imagesRouter")
+
 
 app.use(express.json());
 app.use(
@@ -29,3 +33,6 @@ app.use(cors());
 
 app.use("/api/products", productsRouter);
 app.use("/api/invoices", invoicesRouter);
+app.use("/api/details", detailsRouter);
+app.use("/api/categories", categoriesRouter);
+app.use("/api/images", imagesRouter);

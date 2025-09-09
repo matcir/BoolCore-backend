@@ -1,83 +1,65 @@
 function userDataValidation(fields = []) {
   return function (req, res, next) {
-    const {
-      name,
-      last_name,
-      description,
-      email,
-      address,
-      city,
-      cap,
-      price,
-      discount,
-      country,
-    } = req.body;
+    const data = req.body;
+    const errors = [];
 
-    const errori = [];
+    fields.forEach((field) => {
+      const value = data[field];
 
-    if (fields.includes("name")) {
-      if (!name || typeof name !== "string" || name.trim() === "") {
-        errori.push("Il campo 'name' è obbligatorio.");
+      switch (field) {
+        case "name":
+        case "last_name":
+        case "description":
+        case "address":
+        case "city":
+        case "country":
+          if (!value || typeof value !== "string" || value.trim() === "") {
+            errors.push(`Il campo '${field}' è obbligatorio.`);
+          }
+          break;
+
+        case "email":
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!value || !emailRegex.test(value)) {
+            errors.push("Il campo 'email' non è valido.");
+          }
+          break;
+
+        case "cap":
+          if (!value || !/^\d{5}$/.test(value)) {
+            errors.push("Il campo 'cap' deve essere un CAP valido (5 cifre).");
+          }
+          break;
+
+        case "price":
+          if (value === undefined || typeof value !== "number" || value < 0) {
+            errors.push("Il campo 'price' deve essere un numero positivo.");
+          }
+          break;
+
+        case "discount":
+          if (value === undefined || typeof value !== "number" || value < 0 || value > 100) {
+            errors.push("Il campo 'discount' deve essere un numero tra 0 e 100.");
+          }
+          break;
+
+        case "product_id":
+        case "quantity":
+        case "id":
+          if (value === undefined || isNaN(Number(value))) {
+            errors.push(`Il campo '${field}' deve essere un numero.`);
+          }
+          break;
+
+        // Aggiungi altri casi specifici qui se necessario
+        default:
+          // Se vuoi validare altri tipi di campo, aggiungi qui
+          break;
       }
-    }
+    });
 
-    if (fields.includes("description")) {
-      if (!description || typeof description !== "string" || description.trim() === "") {
-        errori.push("Il campo 'description' è obbligatorio.");
-      }
-    }
-
-    if (fields.includes("last_name")) {
-      if (!last_name || typeof last_name !== "string" || last_name.trim() === "") {
-        errori.push("Il campo 'last_name' è obbligatorio.");
-      }
-    }
-
-    if (fields.includes("email")) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email || !emailRegex.test(email)) {
-        errori.push("Il campo 'email' non è valido.");
-      }
-    }
-
-    if (fields.includes("address")) {
-      if (!address || typeof address !== "string" || address.trim() === "") {
-        errori.push("Il campo 'address' è obbligatorio.");
-      }
-    }
-
-    if (fields.includes("city")) {
-      if (!city || typeof city !== "string" || city.trim() === "") {
-        errori.push("Il campo 'city' è obbligatorio.");
-      }
-    }
-
-    if (fields.includes("cap")) {
-      if (!cap || !/^\d{5}$/.test(cap)) {
-        errori.push("Il campo 'cap' deve essere un CAP valido (5 cifre).");
-      }
-    }
-
-    if (fields.includes("price")) {
-      if (price === undefined || typeof price !== "number" || price < 0) {
-        errori.push("Il campo 'price' deve essere un numero positivo.");
-      }
-    }
-
-    if (fields.includes("discount")) {
-      if (discount === undefined || typeof discount !== "number" || discount < 0 || discount > 100) {
-        errori.push("Il campo 'discount' deve essere un numero tra 0 e 100.");
-      }
-    }
-
-    if (fields.includes("country")) {
-      if (!country || typeof country !== "string" || country.trim() === "") {
-        errori.push("Il campo 'country' è obbligatorio.");
-      }
-    }
-
-    if (errori.length > 0) {
-      return res.status(400).json({ errors: errori });
+    if (errors.length > 0) {
+      return res.status(400).json({ errors });
     }
 
     next();
