@@ -8,6 +8,7 @@ invoicesRouter.post(
     userDataValidation(['name', 'last_name', 'emai', 'address', 'city', 'cap', 'country', 'payment_method']),
     invoiceController.store);
 
+
 invoicesRouter.get("/", invoiceController.index);
 
 invoicesRouter.get("/:id", invoiceController.show);
@@ -18,5 +19,6 @@ invoicesRouter.patch(
     "/:id",
     userDataValidation(['name', 'last_name', 'emai', 'address', 'city', 'cap', 'country', 'payment_method']),
     invoiceController.update);
+
 
 module.exports = invoicesRouter;
