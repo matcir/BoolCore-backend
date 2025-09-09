@@ -8,7 +8,7 @@ function toSlug(name) {
 
 //INDEX
 function index(req, res) {
-  const sql = `SELECT products.id, categories.name as category_name, products.name as product_name, description, price, discount, create_date, SUM(products_orders.quantity) AS total_sold FROM products JOIN categories ON products.category_id = categories.id JOIN products_orders ON products.id = products_orders.productId GROUP BY products.id`;
+  const sql = `SELECT products.id, categories.name as category_name, products.name as product_name, description, price, discount, create_date, COALESCE(SUM(products_orders.quantity),0) AS total_sold FROM products JOIN categories ON products.category_id = categories.id LEFT JOIN products_orders ON products.id = products_orders.productId GROUP BY products.id`;
 
   connection.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
