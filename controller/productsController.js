@@ -101,6 +101,7 @@ function show(req, res) {
 
         // Oggetto finale con tutte le info
         const product_details = {
+          id: productId,
           slug: toSlug(productRow.product_name),
           category: productRow.category_name,
           product_name: productRow.product_name,
