@@ -61,69 +61,6 @@ function show(req, res) {
   })
 }
 
-//STORE
-// function store(req, res) {
-//   const {
-//     name, last_name, email, address, city, cap, country, payment, products,
-//   } = req.body;
-
-
-//   //QUERY DI INSERIMENTO INVOICE
-//   const sql = "INSERT INTO invoices (name, last_name, email, address, city, cap, country, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-//   connection.query(sql, [name, last_name, email, address, city, cap, country, payment], (err, results) => {
-//     if (err) return res.status(500).json({ error: true, message: err.message });
-
-//     //SALVO L'ID DELLA INVOICE APPENA INSERITA
-//     const lastInvoiceId = results.insertId;
-
-//     //PROMISE PER OGNI PRODOTTO E ASSOCIARLO ALLA INVOICE APPENA INSERITA
-//     const productPromises = products.map(product =>
-//       new Promise((resolve, reject) => {
-
-//         //CERCO I DATI DEL PRODOTTO IN BASE ALL'ID PRODOTTI
-//         const productSql = 'SELECT * FROM products WHERE id = ?';
-//         connection.query(productSql, [product.id], (err, prodResults) => {
-//           if (err) return reject(err);
-//           const prod = prodResults[0];
-//           const discount_price = prod.price - (prod.price * prod.discount);
-//           const partial_total = discount_price * product.quantity;
-
-//           //ASSOCIO I PRODOTTI ALL'INVOICE APPENA CREATA
-//           const productsSql = `INSERT INTO products_orders
-//             (productId, invoice_id, quantity, discount_price, product_price, product_name) 
-//             VALUES (?, ?, ?, ?, ?, ?)`;
-//           connection.query(productsSql, [
-//             product.id,
-//             lastInvoiceId,
-//             product.quantity,
-//             discount_price,
-//             prod.price,
-//             prod.name,
-//           ], (err) => {
-//             if (err) return reject(err);
-//             resolve(partial_total); // restituisco il totale parziale
-//           });
-//         });
-//       })
-//     );
-
-//     //UNA VOLTA COMPLETATE TUTTE LE PROMISE...
-//     Promise.all(productPromises)
-
-//       //MODIFICO LA INVOICE APPENA INSERITA AGGIUNGENDO IL TOTALE  CALCOLATO
-//       .then(partials => {
-//         const invoice_total = partials.reduce((sum, val) => sum + val, 0);
-//         let shipping = invoice_total < 99.99 ? 6.99 : 0;
-//         const update_invoice = 'UPDATE invoices SET total = ?, shipping_price = ? WHERE id = ?';
-//         connection.query(update_invoice, [invoice_total, shipping, lastInvoiceId], (err) => {
-//           if (err) return res.status(500).json({ error: true, message: err.message });
-//           res.status(201).json({ message: 'Ordine inserito con successo' });
-//         });
-//       })
-
-//   });
-// }
-
 function store(req, res) {
   const {
     name, last_name, email, address, city, cap, country, payment, products,
@@ -186,10 +123,10 @@ function store(req, res) {
           const vendorMail = {
             from: 'mittente@test.com',
             to: 'boolcore.eshop@gmail.com',
-            subject: 'Test di invio email',
+            subject: 'Nuovo ordine inserito',
             html: `
-              <h1>Grazie per il tuo ordine, ${name}!</h1>
-              <p>Il tuo ordine #${lastInvoiceId} è stato confermato.</p>
+              <h1>Un nuovo ordine è stato inserito!</h1>
+              <p>Ordine numero #${lastInvoiceId} appartenente a ${last_name} ${name}.</p>
               <p>Riepilogo:</p>
               <ul>
                 ${productsListHtml}
@@ -206,6 +143,7 @@ function store(req, res) {
               console.log('Email inviata a Mailtrap con successo!');
             }
           })
+          console.log(email);
 
           // INVIO EMAIL CLIENTE
           const customerMail = {
@@ -224,7 +162,7 @@ function store(req, res) {
               <p>A presto!</p>
             `
           };
-          transport.sendMail(vendorMail, (error, info) => {
+          transport.sendMail(customerMail, (error, info) => {
             if (error) {
               console.error(error);
             } else {
