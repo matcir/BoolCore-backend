@@ -8,36 +8,84 @@ function toSlug(name) {
 
 //INDEX
 function index(req, res) {
-  const sql = `SELECT products.id, categories.name as category_name, products.name as product_name, description, price, discount, create_date, COALESCE(SUM(products_orders.quantity),0) AS total_sold FROM products JOIN categories ON products.category_id = categories.id LEFT JOIN products_orders ON products.id = products_orders.productId GROUP BY products.id`;
+  // 1. Estrai i parametri della query dalla richiesta
+  const { search, price, promo, recent } = req.query;
 
-  connection.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+  // 2. Costruisci la query SQL dinamicamente
+  let sql = `
+    SELECT 
+      products.id, 
+      categories.name AS category_name, 
+      products.name AS product_name, 
+      description, 
+      price, 
+      discount, 
+      create_date, 
+      COALESCE(SUM(products_orders.quantity), 0) AS total_sold 
+    FROM products 
+    JOIN categories ON products.category_id = categories.id 
+    LEFT JOIN products_orders ON products.id = products_orders.productId
+  `;
 
+  // Array per la clausola WHERE e i relativi valori
+  const conditions = [];
+  const params = [];
+
+  // Filtro di ricerca (search)
+  if (search) {
+    conditions.push(`products.name LIKE ? OR products.description LIKE ?`);
+    params.push(`%${search}%`, `%${search}%`);
+  }
+
+  // Filtro per la promozione (promo)
+  if (promo === "true") {
+    conditions.push(`products.discount > 0`);
+  }
+
+  // Aggiungi la clausola WHERE solo se ci sono condizioni
+  if (conditions.length > 0) {
+    sql += ` WHERE ` + conditions.join(` AND `);
+  }
+
+  // Aggiungi la clausola GROUP BY
+  sql += ` GROUP BY products.id`;
+
+  // 3. Gestisci l'ordinamento (ORDER BY)
+  if (price === "asc") {
+    sql += ` ORDER BY price ASC`;
+  } else if (price === "desc") {
+    sql += ` ORDER BY price DESC`;
+  } else if (recent === "true") {
+    // Ordina per data di creazione, dal più recente al meno recente
+    sql += ` ORDER BY create_date DESC`;
+  }
+
+  // 4. Esegui la query principale
+  connection.query(sql, params, (err, results) => {
+    if (err) {
+      console.error('Errore nella query SQL:', err);
+      return res.status(500).json({ error: err.message });
+    }
+
+    // 5. Gestisci le query per le immagini (la logica rimane la stessa)
     const imageSql = "SELECT image FROM images WHERE id_product = ?";
-
-    // Creo un array di Promises per tutte le query immagini
-    const productPromises = results.map(
-      (product) =>
-        new Promise((resolve, reject) => {
-          connection.query(imageSql, [product.id], (err, imageResults) => {
-            if (err) return reject(err);
-
-            const images = imageResults.map((img) => img.image);
-
-            resolve({
-              id: product.id,
-              slug: toSlug(product.product_name),
-              category_name: product.category_name,
-              product_name: product.product_name,
-              description: product.description,
-              price: product.price,
-              discount: product.discount,
-              total_sold: product.total_sold,
-              create_date: product.create_date,
-              images,
-            });
+    const productPromises = results.map((product) =>
+      new Promise((resolve, reject) => {
+        connection.query(imageSql, [product.id], (err, imageResults) => {
+          if (err) return reject(err);
+          const images = imageResults.map((img) => img.image);
+          resolve({
+            id: product.id,
+            category_name: product.category_name,
+            product_name: product.product_name,
+            price: product.price,
+            total_sold: product.total_sold,
+            discount: product.discount,
+            create_date: product.create_date,
+            images,
           });
-        })
+        });
+      })
     );
 
     Promise.all(productPromises)
