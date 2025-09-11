@@ -1,7 +1,16 @@
 const express = require("express");
 const connection = require("../db/connection");
-const { Resend } = require('resend');
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require('nodemailer');
+
+
+var transport = nodemailer.createTransport({
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "975015d843efbb",
+    pass: process.env.MAIL_PASS
+  }
+});
 
 //INDEX
 function index(req, res) {
@@ -170,12 +179,15 @@ function store(req, res) {
 
         connection.query(update_invoice, [invoice_total, shipping, lastInvoiceId], async (err) => {
           if (err) return res.status(500).json({ error: true, message: err.message });
-
+          const productsListHtml = partials.map(p => `<li>${p.product_name} (x${p.quantity}) - ${p.discount_price}€ l'uno</li>`).join('');
+          console.log(transport);
 
           //EMAIL VENDOR
-          try {
-            const productsListHtml = partials.map(p => `<li>${p.product_name} (x${p.quantity}) - ${p.discount_price.toFixed(2)}€ l'uno</li>`).join('');
-            const vendorEmailHtml = `
+          const vendorMail = {
+            from: 'mittente@test.com',
+            to: 'boolcore.eshop@gmail.com',
+            subject: 'Test di invio email',
+            html: `
               <h1>Grazie per il tuo ordine, ${name}!</h1>
               <p>Il tuo ordine #${lastInvoiceId} è stato confermato.</p>
               <p>Riepilogo:</p>
@@ -185,22 +197,22 @@ function store(req, res) {
               <p>Costo Totale: ${invoice_total.toFixed(2)}€</p>
               <p>Spese di Spedizione: ${shipping.toFixed(2)}€</p>
               <p>A presto!</p>
-            `;
-            await resend.emails.send({
-              from: 'onboarding@resend.dev',
-              to: 'boolcore@libero.it',
-              subject: `Conferma del tuo ordine #${lastInvoiceId}`,
-              html: vendorEmailHtml,
-            });
-            console.log(`Email di conferma inviata per l'ordine #${lastInvoiceId} a boolcore.eshop@gmail.com testo: ${vendorEmailHtml}`);
-          } catch (emailError) {
-            console.error('Errore durante l\'invio dell\'email:', emailError);
-          }
+            `
+          };
+          transport.sendMail(vendorMail, (error, info) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log('Email inviata a Mailtrap con successo!');
+            }
+          })
 
           // INVIO EMAIL CLIENTE
-          try {
-            const productsListHtml = partials.map(p => `<li>${p.product_name} (x${p.quantity}) - ${p.discount_price.toFixed(2)}€ l'uno</li>`).join('');
-            const emailHtml = `
+          const customerMail = {
+            from: 'mittente@test.com',
+            to: email,
+            subject: 'Test di invio email',
+            html: `
               <h1>Grazie per il tuo ordine, ${name}!</h1>
               <p>Il tuo ordine #${lastInvoiceId} è stato confermato.</p>
               <p>Riepilogo:</p>
@@ -210,17 +222,15 @@ function store(req, res) {
               <p>Costo Totale: ${invoice_total.toFixed(2)}€</p>
               <p>Spese di Spedizione: ${shipping.toFixed(2)}€</p>
               <p>A presto!</p>
-            `;
-            await resend.emails.send({
-              from: 'onboarding@resend.dev',
-              to: [email], // Usa l'email del cliente
-              subject: `Conferma del tuo ordine #${lastInvoiceId}`,
-              html: emailHtml,
-            });
-            console.log(`Email di conferma inviata per l'ordine #${lastInvoiceId} a ${email} testo: ${emailHtml}`);
-          } catch (emailError) {
-            console.error('Errore durante l\'invio dell\'email:', emailError);
-          }
+            `
+          };
+          transport.sendMail(vendorMail, (error, info) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log('Email inviata a Mailtrap con successo!');
+            }
+          })
 
           res.status(201).json({ message: 'Ordine inserito con successo' });
         });
