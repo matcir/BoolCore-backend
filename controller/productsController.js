@@ -69,22 +69,61 @@ function index(req, res) {
 
     // 5. Gestisci le query per le immagini (la logica rimane la stessa)
     const imageSql = "SELECT image FROM images WHERE id_product = ?";
+    const detailsSql =
+      "SELECT ram, processor, storage, graphic_card, os, psu,`case`, motherboard, inches, color, dpi, audio_type, impedance, connectivity, keyboard_layout, keyboard_type, frequency FROM details JOIN products ON details.product_id = products.id WHERE product_id = ?";
+    let images
+    let filteredDetails = {};
     const productPromises = results.map((product) =>
       new Promise((resolve, reject) => {
-        connection.query(imageSql, [product.id], (err, imageResults) => {
-          if (err) return reject(err);
-          const images = imageResults.map((img) => img.image);
-          resolve({
-            id: product.id,
-            category_name: product.category_name,
-            product_name: product.product_name,
-            price: product.price,
-            total_sold: product.total_sold,
-            discount: product.discount,
-            create_date: product.create_date,
-            images,
+        // Array to hold promises for the two queries
+        const queries = [
+          new Promise((res, rej) => {
+            connection.query(imageSql, [product.id], (err, imageResults) => {
+              if (err) return rej(err);
+              // resolve the promise with the images
+              res(imageResults.map((img) => img.image));
+            });
+          }),
+          new Promise((res, rej) => {
+            connection.query(detailsSql, [product.id], (err, detailsResults) => {
+              if (err) return rej(err);
+              // resolve the promise with the details
+              const details = detailsResults.length > 0 ? detailsResults[0] : null;
+              res(details);
+            });
+          }),
+        ];
+
+        // Wait for both promises to resolve
+        Promise.all(queries)
+          .then(([images, details]) => {
+            const filteredDetails = {};
+            // Filter out null or undefined values
+            if (details) {
+              for (const key in details) {
+                if (details[key] != null) {
+                  filteredDetails[key] = details[key];
+                }
+              }
+            }
+
+            // Now that all data is available, resolve the outer promise
+            resolve({
+              id: product.id,
+              category_name: product.category_name,
+              product_name: product.product_name,
+              price: product.price,
+              total_sold: product.total_sold,
+              discount: product.discount,
+              create_date: product.create_date,
+              images,
+              details: filteredDetails,
+            });
+          })
+          .catch((err) => {
+            // Reject the outer promise if any inner promise fails
+            reject(err);
           });
-        });
       })
     );
 
