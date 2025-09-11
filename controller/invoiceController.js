@@ -1,5 +1,16 @@
 const express = require("express");
 const connection = require("../db/connection");
+const nodemailer = require('nodemailer');
+
+
+var transport = nodemailer.createTransport({
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "975015d843efbb",
+    pass: process.env.MAIL_PASS
+  }
+});
 
 //INDEX
 function index(req, res) {
@@ -50,26 +61,23 @@ function show(req, res) {
   })
 }
 
-//STORE
 function store(req, res) {
   const {
     name, last_name, email, address, city, cap, country, payment, products,
   } = req.body;
 
-
-  //QUERY DI INSERIMENTO INVOICE
+  // QUERY DI INSERIMENTO INVOICE
   const sql = "INSERT INTO invoices (name, last_name, email, address, city, cap, country, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
   connection.query(sql, [name, last_name, email, address, city, cap, country, payment], (err, results) => {
     if (err) return res.status(500).json({ error: true, message: err.message });
 
-    //SALVO L'ID DELLA INVOICE APPENA INSERITA
+    // SALVO L'ID DELLA INVOICE APPENA INSERITA
     const lastInvoiceId = results.insertId;
 
-    //PROMISE PER OGNI PRODOTTO E ASSOCIARLO ALLA INVOICE APPENA INSERITA
+    // PROMISE PER OGNI PRODOTTO E ASSOCIARLO ALLA INVOICE
     const productPromises = products.map(product =>
       new Promise((resolve, reject) => {
-
-        //CERCO I DATI DEL PRODOTTO IN BASE ALL'ID PRODOTTI
+        // CERCO I DATI DEL PRODOTTO IN BASE ALL'ID
         const productSql = 'SELECT * FROM products WHERE id = ?';
         connection.query(productSql, [product.id], (err, prodResults) => {
           if (err) return reject(err);
@@ -77,10 +85,8 @@ function store(req, res) {
           const discount_price = prod.price - (prod.price * prod.discount);
           const partial_total = discount_price * product.quantity;
 
-          //ASSOCIO I PRODOTTI ALL'INVOICE APPENA CREATA
-          const productsSql = `INSERT INTO products_orders
-            (productId, invoice_id, quantity, discount_price, product_price, product_name) 
-            VALUES (?, ?, ?, ?, ?, ?)`;
+          // ASSOCIO I PRODOTTI ALL'INVOICE APPENA CREATA
+          const productsSql = `INSERT INTO products_orders (productId, invoice_id, quantity, discount_price, product_price, product_name) VALUES (?, ?, ?, ?, ?, ?)`;
           connection.query(productsSql, [
             product.id,
             lastInvoiceId,
@@ -90,26 +96,87 @@ function store(req, res) {
             prod.name,
           ], (err) => {
             if (err) return reject(err);
-            resolve(partial_total); // restituisco il totale parziale
+            resolve({
+              partial_total,
+              product_name: prod.name,
+              quantity: product.quantity,
+              discount_price
+            });
           });
         });
       })
     );
 
-    //UNA VOLTA COMPLETATE TUTTE LE PROMISE...
+    // UNA VOLTA COMPLETATE TUTTE LE PROMISE...
     Promise.all(productPromises)
-
-      //MODIFICO LA INVOICE APPENA INSERITA AGGIUNGENDO IL TOTALE  CALCOLATO
       .then(partials => {
-        const invoice_total = partials.reduce((sum, val) => sum + val, 0);
+        const invoice_total = partials.reduce((sum, val) => sum + val.partial_total, 0);
         let shipping = invoice_total < 99.99 ? 6.99 : 0;
         const update_invoice = 'UPDATE invoices SET total = ?, shipping_price = ? WHERE id = ?';
-        connection.query(update_invoice, [invoice_total, shipping, lastInvoiceId], (err) => {
+
+        connection.query(update_invoice, [invoice_total, shipping, lastInvoiceId], async (err) => {
           if (err) return res.status(500).json({ error: true, message: err.message });
+          const productsListHtml = partials.map(p => `<li>${p.product_name} (x${p.quantity}) - ${p.discount_price}€ l'uno</li>`).join('');
+          console.log(transport);
+
+          //EMAIL VENDOR
+          const vendorMail = {
+            from: 'mittente@test.com',
+            to: 'boolcore.eshop@gmail.com',
+            subject: 'Nuovo ordine inserito',
+            html: `
+              <h1>Un nuovo ordine è stato inserito!</h1>
+              <p>Ordine numero #${lastInvoiceId} appartenente a ${last_name} ${name}.</p>
+              <p>Riepilogo:</p>
+              <ul>
+                ${productsListHtml}
+              </ul>
+              <p>Costo Totale: ${invoice_total.toFixed(2)}€</p>
+              <p>Spese di Spedizione: ${shipping.toFixed(2)}€</p>
+              <p>A presto!</p>
+            `
+          };
+          transport.sendMail(vendorMail, (error, info) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log('Email inviata a Mailtrap con successo!');
+            }
+          })
+          console.log(email);
+
+          // INVIO EMAIL CLIENTE
+          const customerMail = {
+            from: 'mittente@test.com',
+            to: email,
+            subject: 'Test di invio email',
+            html: `
+              <h1>Grazie per il tuo ordine, ${name}!</h1>
+              <p>Il tuo ordine #${lastInvoiceId} è stato confermato.</p>
+              <p>Riepilogo:</p>
+              <ul>
+                ${productsListHtml}
+              </ul>
+              <p>Costo Totale: ${invoice_total.toFixed(2)}€</p>
+              <p>Spese di Spedizione: ${shipping.toFixed(2)}€</p>
+              <p>A presto!</p>
+            `
+          };
+          transport.sendMail(customerMail, (error, info) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log('Email inviata a Mailtrap con successo!');
+            }
+          })
+
           res.status(201).json({ message: 'Ordine inserito con successo' });
         });
       })
-
+      .catch(error => {
+        console.error('Errore durante il salvataggio dei prodotti:', error);
+        res.status(500).json({ error: true, message: 'Errore durante la registrazione dei prodotti.' });
+      });
   });
 }
 
