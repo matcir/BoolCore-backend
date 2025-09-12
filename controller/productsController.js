@@ -112,6 +112,7 @@ function index(req, res) {
               id: product.id,
               category_name: product.category_name,
               product_name: product.product_name,
+              description: product.description,
               price: product.price,
               total_sold: product.total_sold,
               discount: product.discount,
