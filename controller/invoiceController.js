@@ -133,7 +133,14 @@ function store(req, res) {
               </ul>
               <p>Costo Totale: ${invoice_total.toFixed(2)}€</p>
               <p>Spese di Spedizione: ${shipping.toFixed(2)}€</p>
-              <p>A presto!</p>
+              <p>Info Spedizione:</p>
+              <ul>
+                <li>Indirizzo: ${address}</li>
+                <li>Nazione: ${country}</li>
+                <li>Città: ${city}</li>
+                <li>CAP: ${cap}</li> 
+                <li>Metodo di Pagamento: ${payment}</li> 
+              </ul>
             `
           };
           transport.sendMail(vendorMail, (error, info) => {
@@ -146,11 +153,12 @@ function store(req, res) {
           console.log(email);
 
           // INVIO EMAIL CLIENTE
-          const customerMail = {
-            from: 'mittente@test.com',
-            to: email,
-            subject: 'Test di invio email',
-            html: `
+          setTimeout(() => {
+            const customerMail = {
+              from: 'mittente@test.com',
+              to: email,
+              subject: 'Test di invio email',
+              html: `
               <h1>Grazie per il tuo ordine, ${name}!</h1>
               <p>Il tuo ordine #${lastInvoiceId} è stato confermato.</p>
               <p>Riepilogo:</p>
@@ -161,14 +169,15 @@ function store(req, res) {
               <p>Spese di Spedizione: ${shipping.toFixed(2)}€</p>
               <p>A presto!</p>
             `
-          };
-          transport.sendMail(customerMail, (error, info) => {
-            if (error) {
-              console.error(error);
-            } else {
-              console.log('Email inviata a Mailtrap con successo!');
-            }
-          })
+            };
+            transport.sendMail(customerMail, (error, info) => {
+              if (error) {
+                console.error(error);
+              } else {
+                console.log('Email inviata a Mailtrap con successo!');
+              }
+            })
+          }, 12000)
 
           res.status(201).json({ message: 'Ordine inserito con successo' });
         });
